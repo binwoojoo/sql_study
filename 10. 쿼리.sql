@@ -18,7 +18,7 @@ ON A.dept_cd = B.dept_cd
 START WITH A.direct_manager_emp_no IS NULL
 -- START WITH A.EMP_NO = '1000000037'
 CONNECT BY PRIOR A.emp_no =  A.direct_manager_emp_no
-ORDER SIBLINGS BY A.emp_no DESC
+ORDER SIBLINGS BY A.emp_no
 ;
 
 SELECT 
@@ -256,9 +256,11 @@ SELECT
     E.emp_nm,
     AVG(S.pay_amt)
 FROM tb_emp E
-JOIN (SELECT emp_no, AVG(pay_amt) AS pay_avg
+JOIN 
+(SELECT emp_no, AVG(pay_amt) AS pay_avg
     FROM tb_sal_his
-    GROUP BY emp_no) S
+    GROUP BY emp_no
+    ) S
 ON E.emp_no = S.emp_no
 ORDER BY E.emp_no
 ;
